@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Theme.Android_Screening_Task_3D_Model_Viewer" parent="android:Theme.Material.Light.NoActionBar" />
+</resources>

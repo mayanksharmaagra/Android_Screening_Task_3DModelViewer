@@ -57,10 +57,29 @@ class ModelRepository @Inject constructor() {
         _placedModels.value = _placedModels.value.filter { it.id != id }
     }
 
+    /** Move a container by a relative delta. */
+    fun moveModel(id: String, delta: Offset) {
+        _placedModels.value = _placedModels.value.map {
+            if (it.id == id) {
+                it.copy(position = it.position + delta)
+            } else it
+        }
+    }
+
     /** Move a container to a new absolute position. */
     fun updatePosition(id: String, newPosition: Offset) {
         _placedModels.value = _placedModels.value.map {
             if (it.id == id) it.copy(position = newPosition) else it
+        }
+    }
+
+    /** Scale a container by a factor. Clamped between 120 dp and 700 dp. */
+    fun scaleModel(id: String, scaleFactor: Float) {
+        _placedModels.value = _placedModels.value.map {
+            if (it.id == id) {
+                val newSize = (it.size * scaleFactor).coerceIn(120f, 700f)
+                it.copy(size = newSize)
+            } else it
         }
     }
 

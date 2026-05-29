@@ -46,6 +46,12 @@ fun ModelContainer(
 ) {
     val sizeDp = model.size.dp
 
+    // Use rememberUpdatedState to ensure the pointerInput blocks always use the latest callbacks
+    // without restarting the gesture detection (which would happen if we used them as keys).
+    val currentOnDrag by rememberUpdatedState(onDrag)
+    val currentOnResize by rememberUpdatedState(onResize)
+    val currentOnTouchDown by rememberUpdatedState(onTouchDown)
+
     val borderColor by animateColorAsState(
         targetValue    = if (model.isInteracting) Color(0xFF00E5FF) else Color(0x33FFFFFF),
         animationSpec  = tween(300),
@@ -65,7 +71,7 @@ fun ModelContainer(
                 // Always detect touch down to bring to front
                 awaitEachGesture {
                     awaitFirstDown(requireUnconsumed = false)
-                    onTouchDown()
+                    currentOnTouchDown()
                 }
             }
     ) {
@@ -93,8 +99,8 @@ fun ModelContainer(
                     .fillMaxSize()
                     .pointerInput(model.id) {
                         detectTransformGestures(panZoomLock = false) { _, pan, zoom, _ ->
-                            onDrag(pan)
-                            if (zoom != 1f) onResize(zoom)
+                            currentOnDrag(pan)
+                            if (zoom != 1f) currentOnResize(zoom)
                         }
                     }
             )

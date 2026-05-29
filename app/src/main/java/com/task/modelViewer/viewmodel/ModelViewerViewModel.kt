@@ -30,8 +30,14 @@ class ModelViewerViewModel @Inject constructor(
     fun updatePosition(id: String, position: Offset) =
         repository.updatePosition(id, position)
 
+    fun moveModel(id: String, delta: Offset) =
+        repository.moveModel(id, delta)
+
     fun updateSize(id: String, size: Float) =
         repository.updateSize(id, size)
+
+    fun scaleModel(id: String, scaleFactor: Float) =
+        repository.scaleModel(id, scaleFactor)
 
     fun toggleInteraction(id: String) =
         repository.toggleInteractionMode(id)

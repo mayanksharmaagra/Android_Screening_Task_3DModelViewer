@@ -56,16 +56,10 @@ fun ModelViewerScreen(
                     canvasWidth = canvasSize.width.toFloat(),
                     canvasHeight = canvasSize.height.toFloat(),
                     onDrag = { delta ->
-                        viewModel.updatePosition(
-                            id = model.id,
-                            position = model.position + delta
-                        )
+                        viewModel.moveModel(model.id, delta)
                     },
                     onResize = { scaleFactor ->
-                        viewModel.updateSize(
-                            id = model.id,
-                            size = model.size * scaleFactor
-                        )
+                        viewModel.scaleModel(model.id, scaleFactor)
                     },
                     onToggleInteract = {
                         viewModel.toggleInteraction(model.id)
